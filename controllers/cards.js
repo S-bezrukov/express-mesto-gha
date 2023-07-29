@@ -38,6 +38,7 @@ const deleteCard = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
+        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Пользователь по указанному ID не найден' });
       } else {
         res.status(INTERNAL_SERVER_ERROR_STATUS).send({ message: 'Произошла ошибка' });
       }
