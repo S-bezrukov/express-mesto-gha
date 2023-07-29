@@ -6,7 +6,7 @@ const {
   CREATE_STATUS,
 } = require('../utils/constantStatusCode');
 
-const getCards = (req, res) => { 
+const getCards = (req, res) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
     .catch(() => {
@@ -27,7 +27,7 @@ const createCard = (req, res) => {
     });
 };
 
-const deleteCard = (req, res) => { 
+const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((cards) => {
       if (!cards) {
@@ -44,13 +44,13 @@ const deleteCard = (req, res) => {
     });
 };
 
-const likeCard = (req, res) => { 
+const likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-  .then((card) => {
+    .then((card) => {
       if (!card) {
         res.status(NOT_FOUND_ERROR_STATUS).send({ message: 'Карточка не найдена' });
         return;
@@ -66,7 +66,7 @@ const likeCard = (req, res) => {
     });
 };
 
-const dislikeCard = (req, res) => { 
+const dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
