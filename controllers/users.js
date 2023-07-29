@@ -8,8 +8,8 @@ const {
 
 const getUsers = (req, res) => {
   User.find({})
-  .then((users) => res.send({ data: users }))
-  .catch(() => res.status(INTERNAL_SERVER_ERROR_STATUS).send({ message: 'Ошибка сервера' }));
+    .then((users) => res.send({ data: users }))
+    .catch(() => res.status(INTERNAL_SERVER_ERROR_STATUS).send({ message: 'Ошибка сервера' }));
 };
 
 const getUser = (req, res) => {
