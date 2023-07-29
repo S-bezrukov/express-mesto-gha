@@ -37,8 +37,8 @@ const deleteCard = (req, res) => {
       res.send({ data: cards });
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Пользователь по указанному ID не найден' });
+      if (err.name === 'CastError' && err.kind === 'ObjectId') {
+        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Неверный формат ID карточки' });
       } else {
         res.status(INTERNAL_SERVER_ERROR_STATUS).send({ message: 'Произошла ошибка' });
       }
@@ -60,7 +60,7 @@ const likeCard = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Пользователь с указанным ID не найден' });
+        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Карточка с указанным ID не найдена' });
       } else {
         res.status(INTERNAL_SERVER_ERROR_STATUS).send({ message: 'Ошибка сервера' });
       }
@@ -82,7 +82,7 @@ const dislikeCard = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Пользователь с указанным ID не найден' });
+        res.status(BAD_REQUEST_ERROR_STATUS).send({ message: 'Карточка с указанным ID не найдена' });
       } else {
         res.status(INTERNAL_SERVER_ERROR_STATUS).send({ message: 'Ошибка сервера' });
       }
