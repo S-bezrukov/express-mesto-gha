@@ -8,6 +8,7 @@ const {
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
 const sendUser = require('../utils/sendUser');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 const updateData = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, req.body, { new: true, runValidators: true })

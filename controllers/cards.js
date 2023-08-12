@@ -4,7 +4,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 const Card = require('../models/card');
 const {
-CREATE_STATUS,
+  CREATE_STATUS,
 } = require('../utils/constants');
 
 const getCards = (req, res, next) => {
