@@ -1,28 +1,21 @@
+require('dotenv').config();
 const express = require('express');
+const { errors } = require('celebrate');
 const mongoose = require('mongoose');
-const userRouter = require('./routes/users');
-const cardRouter = require('./routes/cards');
-const { NOT_FOUND_ERROR_STATUS } = require('./utils/constantStatusCode');
-
+const cookieParser = require('cookie-parser');
+const error = require('./middlewares/error');
+const router = require('./routes');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 const { PORT = 3000 } = process.env;
-
 mongoose.connect('mongodb://localhost:27017/mestodb');
-
 const app = express();
 app.use(express.json());
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: '64c4f6e3a6a40a0befa207c3',
-  };
-
-  next();
-});
-
-app.use(userRouter);
-app.use(cardRouter);
-app.use('*', (req, res) => {
-  res.status(NOT_FOUND_ERROR_STATUS).send({ message: 'URL не найден' });
-});
-
+app.use(cookieParser());
+app.use(cors);
+app.use(requestLogger);
+app.use(router);
+app.use(errorLogger);
+app.use(errors());
+app.use(error);
 app.listen(PORT);
